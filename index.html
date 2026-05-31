@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>VIP · Bienvenido</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:       #0c0808;
+      --ink2:      #1a1210;
+      --ink3:      #241a16;
+      --gold:      #e8c97a;
+      --rose:      #c9956a;
+      --rose2:     #c4a35a;
+      --muted:     #a89080;
+      --dim:       rgba(168,144,128,0.45);
+      --card-bg:   rgba(26,18,16,0.85);
+      --card-br:   rgba(201,149,106,0.18);
+      --radius:    12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: #f5ede4;
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.35;
+    }
+
+    /* ── AMBIENT GLOW ── */
+    .ambient {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% -5%, rgba(201,149,106,0.13) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 30% at 90% 90%, rgba(196,163,90,0.07) 0%, transparent 55%);
+    }
+
+    .wrap { position: relative; z-index: 1; max-width: 480px; margin: 0 auto; padding: 0 20px; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 60px 0 48px;
+      text-align: center;
+    }
+
+    .logo-ring {
+      position: relative; width: 96px; height: 96px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.8s ease both;
+    }
+    .logo-ring svg { width: 100%; height: 100%; }
+
+    .welcome-tag {
+      font-size: 0.62rem; letter-spacing: 0.32em; color: var(--rose);
+      text-transform: uppercase; margin-bottom: 14px;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+
+    .welcome-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.6rem, 11vw, 4.2rem);
+      font-weight: 300; line-height: 1;
+      color: #f5ede4; letter-spacing: 0.04em;
+      animation: fadeUp 0.8s 0.15s ease both;
+    }
+    .welcome-name span { color: var(--gold); font-style: italic; }
+
+    .deco { height: 1px; width: 140px; margin: 20px auto;
+      background: linear-gradient(90deg, transparent, var(--rose), transparent);
+      animation: fadeUp 0.8s 0.25s ease both; }
+
+    .hero-sub {
+      font-size: 0.78rem; letter-spacing: 0.12em; color: var(--muted);
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    /* folio badge */
+    .folio {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 22px; padding: 8px 18px;
+      border: 1px solid var(--card-br);
+      background: rgba(201,149,106,0.06);
+      border-radius: 40px;
+      font-size: 0.68rem; letter-spacing: 0.2em; color: var(--muted);
+      animation: fadeUp 0.8s 0.35s ease both;
+    }
+    .folio b { color: var(--gold); font-weight: 500; }
+
+    /* NFC pulse */
+    .nfc-pulse {
+      margin-top: 40px;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      animation: fadeUp 0.8s 0.5s ease both;
+    }
+    .pulse-icon {
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 1px solid rgba(201,149,106,0.3);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--rose); position: relative;
+    }
+    .pulse-icon::before, .pulse-icon::after {
+      content: ''; position: absolute;
+      width: 100%; height: 100%; border-radius: 50%;
+      border: 1px solid rgba(201,149,106,0.3);
+      animation: pulseRing 2.4s ease-out infinite;
+    }
+    .pulse-icon::after { animation-delay: 1.2s; }
+    .nfc-label { font-size: 0.62rem; letter-spacing: 0.22em; color: var(--dim); text-transform: uppercase; }
+
+    /* scroll hint */
+    .scroll-hint {
+      margin-top: 44px; display: flex; flex-direction: column; align-items: center; gap: 8px;
+      animation: fadeUp 0.8s 0.7s ease both;
+    }
+    .scroll-hint span { font-size: 0.6rem; letter-spacing: 0.25em; color: var(--dim); text-transform: uppercase; }
+    .scroll-arrow { animation: bounce 2s ease-in-out infinite; }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 64px 0; }
+    .section-label {
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+      margin-bottom: 12px;
+    }
+    .section-label span { font-size: 0.6rem; letter-spacing: 0.35em; color: var(--rose); text-transform: uppercase; }
+    .section-label .line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--card-br)); max-width: 60px; }
+    .section-label .line.r { background: linear-gradient(270deg, transparent, var(--card-br)); }
+
+    h2.section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 7vw, 2.6rem);
+      font-weight: 300; text-align: center; color: #f5ede4;
+      letter-spacing: 0.05em; margin-bottom: 8px;
+    }
+    h2.section-title em { color: var(--gold); font-style: italic; }
+    .section-sub { text-align: center; color: var(--muted); font-size: 0.82rem; letter-spacing: 0.06em; margin-bottom: 40px; }
+
+    /* ── PRIZE OF THE DAY ── */
+    .prize-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-br);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      position: relative; overflow: hidden;
+    }
+    .prize-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .prize-day-label { font-size: 0.6rem; letter-spacing: 0.3em; color: var(--rose); text-transform: uppercase; margin-bottom: 6px; }
+    .prize-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 14vw, 5rem);
+      font-weight: 600; color: var(--gold);
+      line-height: 1; font-style: italic;
+      margin: 8px 0;
+    }
+    .prize-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+    .prize-cta {
+      display: inline-block; padding: 10px 28px;
+      background: linear-gradient(135deg, var(--rose), var(--rose2));
+      color: var(--ink); font-size: 0.7rem; letter-spacing: 0.2em;
+      text-transform: uppercase; font-weight: 500;
+      border-radius: 40px; cursor: pointer; border: none;
+      text-decoration: none;
+    }
+
+    /* ── GANCHOS GRID ── */
+    .hooks-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .hook-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-br);
+      border-radius: var(--radius);
+      padding: 20px 16px;
+      backdrop-filter: blur(6px);
+      transition: border-color 0.25s;
+    }
+    .hook-card:hover { border-color: rgba(201,149,106,0.4); }
+    .hook-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(201,149,106,0.1);
+      border: 1px solid rgba(201,149,106,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--rose); margin-bottom: 12px;
+    }
+    .hook-tag { font-size: 0.58rem; letter-spacing: 0.25em; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+    .hook-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 600; color: var(--rose2);
+      font-style: italic; line-height: 1.1; margin-bottom: 4px;
+    }
+    .hook-desc { font-size: 0.74rem; color: var(--muted); line-height: 1.5; }
+    .hook-card.featured {
+      grid-column: span 2;
+      border-color: rgba(232,201,122,0.25);
+    }
+    .hook-card.featured .hook-value { font-size: 2rem; }
+
+    /* ── RULETA ── */
+    .roulette-wrap {
+      background: var(--card-bg);
+      border: 1px solid var(--card-br);
+      border-radius: var(--radius);
+      padding: 40px 24px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+    .wheel-container { position: relative; width: 220px; height: 220px; margin: 0 auto 24px; }
+    .wheel-pointer {
+      position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+      width: 0; height: 0; z-index: 5;
+      border-left: 9px solid transparent;
+      border-right: 9px solid transparent;
+      border-top: 18px solid var(--gold);
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    }
+    #spinWheel {
+      transition: none;
+      transform-origin: center;
+    }
+    #spinWheel.spinning {
+      transition: transform 2.8s cubic-bezier(0.17, 0.67, 0.15, 1.0);
+    }
+    .spin-btn {
+      padding: 12px 36px;
+      background: linear-gradient(135deg, var(--rose), var(--rose2));
+      color: var(--ink); border: none; cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.18em; font-weight: 500;
+      text-transform: uppercase; border-radius: 40px;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .spin-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .spin-btn:not(:disabled):active { transform: scale(0.97); }
+    .spin-result { margin-top: 20px; min-height: 60px; }
+    .spin-result .result-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem; font-weight: 600; color: var(--gold);
+      font-style: italic; line-height: 1;
+    }
+    .spin-result .result-label {
+      font-size: 0.65rem; letter-spacing: 0.25em; color: var(--muted);
+      text-transform: uppercase; margin-top: 4px;
+    }
+
+    /* ── PUNTOS / SELLITO ── */
+    .stamp-track {
+      display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+      margin: 24px 0;
+    }
+    .stamp {
+      width: 48px; height: 48px; border-radius: 50%;
+      border: 1px solid var(--card-br);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; transition: all 0.3s;
+    }
+    .stamp.filled {
+      background: rgba(201,149,106,0.15);
+      border-color: var(--rose);
+      color: var(--rose);
+    }
+    .stamp.star {
+      background: linear-gradient(135deg, rgba(232,201,122,0.2), rgba(201,149,106,0.2));
+      border-color: var(--gold);
+    }
+
+    /* ── STATS ── */
+    .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 32px; }
+    .stat-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-br);
+      border-radius: var(--radius);
+      padding: 16px 12px; text-align: center;
+      backdrop-filter: blur(6px);
+    }
+    .stat-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem; font-weight: 600; color: var(--gold);
+      font-style: italic; line-height: 1;
+    }
+    .stat-label { font-size: 0.6rem; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; margin-top: 4px; }
+
+    /* ── CUMPLE ── */
+    .bday-card {
+      background: linear-gradient(135deg, rgba(232,201,122,0.08), rgba(201,149,106,0.08));
+      border: 1px solid rgba(232,201,122,0.25);
+      border-radius: var(--radius); padding: 28px 24px; text-align: center;
+    }
+    .bday-icon { font-size: 2.2rem; margin-bottom: 10px; }
+    .bday-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 400; color: var(--gold);
+      font-style: italic; margin-bottom: 6px;
+    }
+    .bday-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── REFERIDO ── */
+    .ref-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-br);
+      border-radius: var(--radius); padding: 28px 24px;
+      backdrop-filter: blur(6px);
+    }
+    .ref-amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem; font-weight: 600; color: var(--gold);
+      font-style: italic;
+    }
+    .ref-share {
+      display: flex; gap: 10px; margin-top: 18px;
+    }
+    .ref-share input {
+      flex: 1; background: rgba(255,255,255,0.04);
+      border: 1px solid var(--card-br); border-radius: 8px;
+      color: var(--muted); font-size: 0.72rem; padding: 10px 12px;
+      font-family: 'Jost', sans-serif; outline: none;
+    }
+    .ref-copy {
+      padding: 10px 16px; background: rgba(201,149,106,0.15);
+      border: 1px solid rgba(201,149,106,0.3);
+      border-radius: 8px; color: var(--rose);
+      font-size: 0.7rem; cursor: pointer; white-space: nowrap;
+      font-family: 'Jost', sans-serif; letter-spacing: 0.1em;
+    }
+    .ref-copy:active { background: rgba(201,149,106,0.25); }
+
+    /* ── MEMBRESÍA ── */
+    .vip-card {
+      width: 100%; max-width: 340px; height: 200px;
+      border-radius: 16px; margin: 0 auto;
+      padding: 24px 24px;
+      background: linear-gradient(135deg, #1e1410 0%, #2d1f16 50%, #1a1008 100%);
+      border: 1px solid rgba(201,149,106,0.3);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 30px rgba(201,149,106,0.08);
+      display: flex; flex-direction: column; justify-content: space-between;
+      position: relative; overflow: hidden;
+    }
+    .vip-card::before {
+      content: ''; position: absolute;
+      top: -40px; right: -40px; width: 120px; height: 120px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,201,122,0.1), transparent);
+    }
+    .vip-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .vip-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; letter-spacing: 0.18em; color: #f5ede4; }
+    .vip-brand-sub { font-size: 0.5rem; letter-spacing: 0.22em; color: var(--muted); margin-top: 1px; }
+    .vip-chip {
+      width: 38px; height: 28px; border-radius: 4px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--rose2) 60%, #8a6020 100%);
+    }
+    .vip-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+    .vip-member { font-size: 0.58rem; letter-spacing: 0.15em; color: var(--rose); }
+    .vip-num { font-size: 0.68rem; letter-spacing: 0.1em; color: rgba(245,237,228,0.6); margin-top: 2px; }
+    .vip-since { font-size: 0.55rem; letter-spacing: 0.12em; color: var(--muted); text-align: right; }
+
+    /* ── CTA PRINCIPAL ── */
+    .cta-section {
+      padding: 60px 0 80px; text-align: center;
+    }
+    .wa-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: #fff; text-decoration: none;
+      padding: 16px 32px; border-radius: 50px;
+      font-size: 0.85rem; font-weight: 500; letter-spacing: 0.06em;
+      box-shadow: 0 8px 24px rgba(37,211,102,0.25);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .wa-btn:active { transform: scale(0.97); box-shadow: 0 4px 12px rgba(37,211,102,0.2); }
+    .wa-btn svg { flex-shrink: 0; }
+    .cta-sub { margin-top: 14px; font-size: 0.72rem; color: var(--dim); letter-spacing: 0.08em; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 32px 0; text-align: center;
+      border-top: 1px solid rgba(201,149,106,0.1);
+    }
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; letter-spacing: 0.3em; color: var(--rose2); font-weight: 300;
+    }
+    .footer-sub { font-size: 0.65rem; letter-spacing: 0.18em; color: var(--dim); margin-top: 4px; }
+    .footer-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 18px; padding: 6px 14px;
+      border: 1px solid rgba(201,149,106,0.15); border-radius: 20px;
+      font-size: 0.58rem; letter-spacing: 0.15em; color: var(--dim);
+      text-decoration: none;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulseRing {
+      0%   { transform: scale(1); opacity: 0.5; }
+      100% { transform: scale(2.4); opacity: 0; }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(6px); }
+    }
+    @keyframes spinIn {
+      from { opacity: 0; transform: scale(0.6) rotate(-10deg); }
+      to   { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+    .animate-in { animation: fadeUp 0.6s ease both; }
+    .result-anim { animation: spinIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: var(--ink3); border: 1px solid var(--card-br);
+      color: var(--gold); padding: 10px 22px; border-radius: 40px;
+      font-size: 0.75rem; letter-spacing: 0.1em;
+      opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 100;
+      white-space: nowrap;
+    }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<div class="ambient"></div>
+<div class="toast" id="toast"></div>
+
+<div class="wrap">
+
+  <!-- ═══ HERO ═══ -->
+  <div class="hero">
+    <div class="logo-ring">
+      <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#e8c97a"/>
+            <stop offset="50%" stop-color="#c9956a"/>
+            <stop offset="100%" stop-color="#c4a35a"/>
+          </linearGradient>
+        </defs>
+        <circle cx="48" cy="48" r="44" fill="none" stroke="rgba(201,149,106,0.25)" stroke-width="0.8"/>
+        <circle cx="48" cy="48" r="38" fill="rgba(201,149,106,0.05)" stroke="url(#lg1)" stroke-width="1.2"/>
+        <!-- NFC signal arcs -->
+        <path d="M48 28 a20 20 0 0 1 0 40" fill="none" stroke="url(#lg1)" stroke-width="1.8" stroke-linecap="round" opacity="0.5"/>
+        <path d="M48 35 a13 13 0 0 1 0 26" fill="none" stroke="url(#lg1)" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+        <path d="M48 42 a6 6 0 0 1 0 12" fill="none" stroke="url(#lg1)" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="48" cy="48" r="2.5" fill="#e8c97a"/>
+        <!-- corner dots -->
+        <circle cx="48" cy="6"  r="1.8" fill="#c9956a" opacity="0.7"/>
+        <circle cx="48" cy="90" r="1.8" fill="#c9956a" opacity="0.7"/>
+        <circle cx="6"  cy="48" r="1.8" fill="#c9956a" opacity="0.7"/>
+        <circle cx="90" cy="48" r="1.8" fill="#c9956a" opacity="0.7"/>
+      </svg>
+    </div>
+
+    <p class="welcome-tag">Tarjeta VIP · Bienvenid@</p>
+    <h1 class="welcome-name"><span id="heroName">Cliente</span></h1>
+    <div class="deco"></div>
+    <p class="hero-sub">Tus beneficios exclusivos de hoy</p>
+
+    <div class="folio">
+      Folio &nbsp;<b id="folioNum">VIP-000</b>
+    </div>
+
+    <div class="nfc-pulse">
+      <div class="pulse-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M12 2a10 10 0 1 0 10 10"/>
+          <path d="M12 6a6 6 0 1 0 6 6"/>
+          <path d="M12 10a2 2 0 1 0 2 2"/>
+        </svg>
+      </div>
+      <span class="nfc-label">Tarjeta NFC activa</span>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Ver mis beneficios</span>
+      <svg class="scroll-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="1.8">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ═══ PREMIO DEL DÍA ═══ -->
+  <section>
+    <div class="section-label">
+      <div class="line"></div>
+      <span>Premio de hoy</span>
+      <div class="line r"></div>
+    </div>
+    <h2 class="section-title">Oferta del <em>día</em></h2>
+    <p class="section-sub">Cambia cada día de la semana</p>
+
+    <div class="prize-card animate-in">
+      <div class="prize-day-label" id="prizeDay">Lunes</div>
+      <div class="prize-value" id="prizeVal">20% OFF</div>
+      <p class="prize-desc" id="prizeDesc">En todos los servicios del salón. Aplica hoy al presentar esta pantalla.</p>
+      <a href="https://wa.me/5218139153999?text=Hola%2C%20quiero%20agendar%20y%20usar%20mi%20promo%20de%20hoy" class="prize-cta">Agendar ahora</a>
+    </div>
+  </section>
+
+  <!-- ═══ GANCHOS GRID ═══ -->
+  <section>
+    <div class="section-label">
+      <div class="line"></div>
+      <span>Tus ganchos VIP</span>
+      <div class="line r"></div>
+    </div>
+    <h2 class="section-title">Beneficios <em>exclusivos</em></h2>
+    <p class="section-sub">Elige uno o actívalos todos</p>
+
+    <div class="hooks-grid">
+      <!-- Referido -->
+      <div class="hook-card">
+        <div class="hook-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="hook-tag">Trae un amigo</div>
+        <div class="hook-value">$50 OFF</div>
+        <div class="hook-desc">Para cada una al venir juntas</div>
+      </div>
+
+      <!-- Regalo 2da visita -->
+      <div class="hook-card">
+        <div class="hook-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <polyline points="20 12 20 22 4 22 4 12"/>
+            <rect x="2" y="7" width="20" height="5"/>
+            <line x1="12" y1="22" x2="12" y2="7"/>
+            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+          </svg>
+        </div>
+        <div class="hook-tag">2ª visita</div>
+        <div class="hook-value">Kit regalo</div>
+        <div class="hook-desc">Shampoo o producto $150</div>
+      </div>
+
+      <!-- Cumple -->
+      <div class="hook-card">
+        <div class="hook-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div class="hook-tag">Cumpleaños</div>
+        <div class="hook-value">$300 free</div>
+        <div class="hook-desc">Servicio gratis ese día</div>
+      </div>
+
+      <!-- Puntos -->
+      <div class="hook-card">
+        <div class="hook-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </div>
+        <div class="hook-tag">Puntos</div>
+        <div class="hook-value">Acumula</div>
+        <div class="hook-desc">Canjea por servicios gratis</div>
+      </div>
+
+      <!-- Ruleta FEATURED -->
+      <div class="hook-card featured">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+          <div class="hook-icon" style="flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 2v10l6 3"/>
+            </svg>
+          </div>
+          <div>
+            <div class="hook-tag" style="margin-bottom:2px;">Tap to Spin</div>
+            <div class="hook-value">5–50% OFF</div>
+          </div>
+        </div>
+        <div class="hook-desc">Gira la ruleta y descubre tu descuento del día</div>
+      </div>
+
+      <!-- VIP -->
+      <div class="hook-card">
+        <div class="hook-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="2" y="5" width="20" height="14" rx="2"/>
+            <line x1="2" y1="10" x2="22" y2="10"/>
+          </svg>
+        </div>
+        <div class="hook-tag">Membresía</div>
+        <div class="hook-value">$299/mes</div>
+        <div class="hook-desc">1 servicio gratis + descuentos</div>
+      </div>
+
+      <!-- Rifa -->
+      <div class="hook-card">
+        <div class="hook-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="hook-tag">Rifa mensual</div>
+        <div class="hook-value">1 Day Spa</div>
+        <div class="hook-desc">Valor $2,000 · Solo clientes activos</div>
+      </div>
+
+      <!-- Redes -->
+      <div class="hook-card">
+        <div class="hook-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
+          </svg>
+        </div>
+        <div class="hook-tag">Redes sociales</div>
+        <div class="hook-value">15% OFF</div>
+        <div class="hook-desc">Publica tu servicio y gana</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ RULETA ═══ -->
+  <section>
+    <div class="section-label">
+      <div class="line"></div>
+      <span>Tap to Spin</span>
+      <div class="line r"></div>
+    </div>
+    <h2 class="section-title">Gira y <em>Gana</em></h2>
+    <p class="section-sub">1 giro disponible con tu tarjeta VIP</p>
+
+    <div class="roulette-wrap">
+      <div class="wheel-container">
+        <div class="wheel-pointer"></div>
+        <svg id="spinWheel" width="220" height="220" viewBox="0 0 220 220">
+          <defs>
+            <linearGradient id="hubGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#e8c97a"/>
+              <stop offset="100%" stop-color="#c4a35a"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <button class="spin-btn" id="spinBtn" onclick="spinWheel()">Girar ruleta</button>
+      <div class="spin-result" id="spinResult"></div>
+    </div>
+  </section>
+
+  <!-- ═══ MIS VISITAS ═══ -->
+  <section>
+    <div class="section-label">
+      <div class="line"></div>
+      <span>Tu historial</span>
+      <div class="line r"></div>
+    </div>
+    <h2 class="section-title">Mi <em>cuenta</em></h2>
+    <p class="section-sub">Progreso hacia tu próximo premio</p>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-val" id="statVisits">3</div>
+        <div class="stat-label">Visitas</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="statPoints">450</div>
+        <div class="stat-label">Puntos</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="statSaved">$150</div>
+        <div class="stat-label">Ahorrado</div>
+      </div>
+    </div>
+
+    <!-- sellito de visitas -->
+    <div class="prize-card" style="margin-bottom:16px;">
+      <div class="prize-day-label">Tu 5ª visita = Premio especial</div>
+      <div class="stamp-track" id="stampTrack"></div>
+      <p style="font-size:0.75rem;color:var(--muted);">Completa 5 visitas y recibe el Kit Nioxin completo</p>
+    </div>
+
+    <!-- cumpleaños -->
+    <div class="bday-card">
+      <div class="bday-icon">🎂</div>
+      <div class="bday-title">Happy Birthday!</div>
+      <p class="bday-desc">Tu próximo cumpleaños tienes un look nuevo sin costo.<br>Recuérdanos al agendar.</p>
+    </div>
+  </section>
+
+  <!-- ═══ REFERIDO ═══ -->
+  <section>
+    <div class="section-label">
+      <div class="line"></div>
+      <span>Refiere y gana</span>
+      <div class="line r"></div>
+    </div>
+    <h2 class="section-title">Trae un <em>amigo</em></h2>
+    <p class="section-sub">Ganan los dos</p>
+
+    <div class="ref-card">
+      <div class="prize-day-label">Tu descuento por referido</div>
+      <div class="ref-amount">$50 OFF</div>
+      <p style="font-size:0.8rem;color:var(--muted);margin-top:8px;line-height:1.6;">
+        Comparte tu código y cuando venga juntas, ambas obtienen $50 de descuento en su servicio.
+      </p>
+      <div class="ref-share">
+        <input id="refCode" type="text" readonly value="VIP-000">
+        <button class="ref-copy" onclick="copyRef()">Copiar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TARJETA VIP ═══ -->
+  <section>
+    <div class="section-label">
+      <div class="line"></div>
+      <span>Tu membresía</span>
+      <div class="line r"></div>
+    </div>
+    <h2 class="section-title">Tarjeta <em>VIP</em></h2>
+    <p class="section-sub">Tecnología NFC · Sin app · Solo toca</p>
+
+    <div class="vip-card">
+      <div class="vip-card-top">
+        <div>
+          <div class="vip-brand" id="vipBrand">BESTA</div>
+          <div class="vip-brand-sub">BEAUTY SALON</div>
+        </div>
+        <div class="vip-chip"></div>
+      </div>
+      <div class="vip-bottom">
+        <div>
+          <div class="vip-member">MIEMBRO VIP</div>
+          <div class="vip-num" id="vipNum">•••• •••• •••• VIP1</div>
+        </div>
+        <div class="vip-since">
+          <div style="font-size:0.5rem;color:var(--muted);">VIGENCIA</div>
+          <div style="font-size:0.65rem;color:#f5ede4;">12 MESES</div>
+        </div>
+      </div>
+    </div>
+
+    <p style="text-align:center;font-size:0.72rem;color:var(--dim);margin-top:18px;letter-spacing:0.08em;">
+      Sin app · Sin contraseña · Solo acerca el celular
+    </p>
+  </section>
+
+  <!-- ═══ CTA ═══ -->
+  <div class="cta-section">
+    <a href="https://wa.me/5218139153999?text=Hola%2C%20quiero%20info%20sobre%20la%20tarjeta%20VIP%20NFC" class="wa-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.114.554 4.1 1.522 5.822L.057 23.428c-.07.334.223.634.558.558l5.643-1.463A11.944 11.944 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.817 9.817 0 0 1-5.013-1.374l-.36-.213-3.713.963.99-3.612-.234-.372A9.818 9.818 0 0 1 2.182 12C2.182 6.57 6.569 2.182 12 2.182S21.818 6.57 21.818 12 17.431 21.818 12 21.818z"/>
+      </svg>
+      Quiero mi tarjeta VIP
+    </a>
+    <p class="cta-sub">También puedes agendar tu próxima cita aquí</p>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="footer-brand" id="footerBrand">BESTA</div>
+    <div class="footer-sub">Salón de Belleza · Experiencias VIP</div>
+    <div class="deco" style="margin-top:16px;margin-bottom:16px;"></div>
+    <a class="footer-badge" href="https://warmours.com" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      Tecnología NFC · WarmourS
+    </a>
+  </footer>
+
+</div><!-- /wrap -->
+
+<script>
+  /* ── URL PARAMS ── */
+  const params = new URLSearchParams(window.location.search);
+  const rawName = params.get('n') || params.get('nombre') || 'VIP';
+  const name = decodeURIComponent(rawName).replace(/\+/g, ' ').trim();
+  const negocio = params.get('biz') || params.get('negocio') || 'BESTA';
+  const folio = params.get('f') || ('VIP-' + Math.floor(Math.random()*900+100));
+
+  /* Inject name */
+  document.getElementById('heroName').textContent = name;
+  document.getElementById('folioNum').textContent = folio;
+  document.getElementById('refCode').value = folio;
+  document.getElementById('vipBrand').textContent = negocio.toUpperCase();
+  document.getElementById('footerBrand').textContent = negocio.toUpperCase();
+  document.title = negocio.toUpperCase() + ' · Hola ' + name;
+
+  /* ── PRIZE OF THE DAY ── */
+  const days = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  const dayNames = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const today = new Date().getDay();
+
+  const dayPrizes = {
+    0: { val:'10% OFF',    desc:'Domingo tranquilo, precio especial en todos los servicios.' },
+    1: { val:'20% OFF',    desc:'Lunes de recuperación. Aplica en todos los servicios del día.' },
+    2: { val:'Kit regalo', desc:'Martes de regalo. En servicios +$400 incluye producto de $150.' },
+    3: { val:'Ruleta',     desc:'Miércoles de suerte. Gira la ruleta más abajo y gana hasta 50% OFF.' },
+    4: { val:'$650',       desc:'Jueves especial: Manos + Pies juntos. Valor normal $810.' },
+    5: { val:'15% OFF',    desc:'Viernes de redes: publica tu servicio y gana en tu próxima visita.' },
+    6: { val:'Rifa',       desc:'Sábado VIP: participas en la rifa mensual de un Day Spa $2,000.' },
+  };
+
+  const prize = dayPrizes[today];
+  document.getElementById('prizeDay').textContent = dayNames[today];
+  document.getElementById('prizeVal').textContent = prize.val;
+  document.getElementById('prizeDesc').textContent = prize.desc;
+
+  /* ── STAMP TRACK ── */
+  const visits = parseInt(params.get('v') || '3');
+  const track = document.getElementById('stampTrack');
+  for (let i = 1; i <= 5; i++) {
+    const s = document.createElement('div');
+    s.className = 'stamp' + (i <= visits ? ' filled' : '') + (i === 5 ? ' star' : '');
+    s.textContent = i === 5 ? '⭐' : (i <= visits ? '✓' : i);
+    track.appendChild(s);
+  }
+
+  /* stats from params */
+  const points = params.get('pts') || '450';
+  const saved  = params.get('saved') || '$150';
+  document.getElementById('statVisits').textContent = visits;
+  document.getElementById('statPoints').textContent = points;
+  document.getElementById('statSaved').textContent  = saved;
+
+  /* ── RULETA ── */
+  const prizes = ['5% OFF','10% OFF','15% OFF','20% OFF','30% OFF','50% OFF'];
+  const colors = ['#2d1a10','#3a2216','#c9956a','#1e1410','#c4a35a','#4a2a1a'];
+  const textColors = ['#e8c97a','#e8c97a','#0c0808','#e8c97a','#0c0808','#e8c97a'];
+  const n = prizes.length;
+  const sliceAngle = 360 / n;
+  let currentRotation = 0;
+  let spun = false;
+
+  /* Build wheel SVG */
+  const svg = document.getElementById('spinWheel');
+  const cx = 110, cy = 110, r = 104;
+
+  prizes.forEach((prize, i) => {
+    const startDeg = i * sliceAngle - 90;
+    const endDeg   = (i + 1) * sliceAngle - 90;
+    const startRad = startDeg * Math.PI / 180;
+    const endRad   = endDeg   * Math.PI / 180;
+    const x1 = cx + r * Math.cos(startRad);
+    const y1 = cy + r * Math.sin(startRad);
+    const x2 = cx + r * Math.cos(endRad);
+    const y2 = cy + r * Math.sin(endRad);
+
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', `M${cx},${cy} L${x1},${y1} A${r},${r} 0 0,1 ${x2},${y2} Z`);
+    path.setAttribute('fill', colors[i]);
+    path.setAttribute('stroke', '#0c0808');
+    path.setAttribute('stroke-width', '1.5');
+
+    const midAngle = ((i + 0.5) * sliceAngle - 90) * Math.PI / 180;
+    const tx = cx + 72 * Math.cos(midAngle);
+    const ty = cy + 72 * Math.sin(midAngle);
+    const rotateDeg = (i + 0.5) * sliceAngle;
+
+    const text = document.createElementNS('http://www.w3.org/2000/svg','text');
+    text.setAttribute('x', tx);
+    text.setAttribute('y', ty);
+    text.setAttribute('text-anchor','middle');
+    text.setAttribute('dominant-baseline','middle');
+    text.setAttribute('fill', textColors[i]);
+    text.setAttribute('font-size','11');
+    text.setAttribute('font-family','Jost,sans-serif');
+    text.setAttribute('font-weight','400');
+    text.setAttribute('transform', `rotate(${rotateDeg},${tx},${ty})`);
+    text.textContent = prize;
+
+    g.appendChild(path);
+    g.appendChild(text);
+    svg.appendChild(g);
+  });
+
+  /* Hub */
+  const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  circle.setAttribute('cx', cx); circle.setAttribute('cy', cy); circle.setAttribute('r', '14');
+  circle.setAttribute('fill', '#e8c97a'); circle.setAttribute('stroke', '#0c0808'); circle.setAttribute('stroke-width', '2');
+  svg.appendChild(circle);
+
+  function spinWheel() {
+    if (spun) { showToast('Ya usaste tu giro de hoy 😉'); return; }
+    const btn = document.getElementById('spinBtn');
+    btn.disabled = true;
+    btn.textContent = 'Girando…';
+
+    const extraSpins = 5 + Math.random() * 5;
+    const landAngle = Math.floor(Math.random() * n);
+    const newRotation = currentRotation + extraSpins * 360 + (landAngle * sliceAngle);
+
+    svg.style.transition = 'none';
+    svg.classList.add('spinning');
+    svg.style.transition = 'transform 2.8s cubic-bezier(0.17,0.67,0.15,1.0)';
+    svg.style.transform = `rotate(${newRotation}deg)`;
+    currentRotation = newRotation;
+
+    setTimeout(() => {
+      const won = prizes[landAngle];
+      const res = document.getElementById('spinResult');
+      res.innerHTML = `<div class="result-anim"><div class="result-val">${won}</div><div class="result-label">Muestra esta pantalla al llegar</div></div>`;
+      btn.textContent = '¡Girado!';
+      spun = true;
+      logScan(won);
+    }, 3000);
+  }
+
+  /* ── COPY REF ── */
+  function copyRef() {
+    const code = document.getElementById('refCode').value;
+    navigator.clipboard.writeText(code).then(() => showToast('Código copiado: ' + code));
+  }
+
+  /* ── TOAST ── */
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  /* ── LOG TO GOOGLE SHEETS ── */
+  /* 
+    INSTRUCCIONES PARA ACTIVAR:
+    1. Crear Google Sheet con columnas: Timestamp | Nombre | Folio | Negocio | Día | Premio | Visitas
+    2. Extensiones → Apps Script → pegar este código:
+
+    function doPost(e) {
+      var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+      var data = JSON.parse(e.postData.contents);
+      sheet.appendRow([data.ts, data.name, data.folio, data.biz, data.day, data.prize, data.visits]);
+      return ContentService.createTextOutput('ok');
+    }
+
+    3. Publicar → Implementar como app web → Acceso: Cualquiera
+    4. Reemplazar SHEETS_URL con tu URL
+  */
+  const SHEETS_URL = ''; /* <-- pegar URL del Apps Script aquí */
+
+  function logScan(prizeWon) {
+    if (!SHEETS_URL) return;
+    const payload = {
+      ts:     new Date().toLocaleString('es-MX'),
+      name:   name,
+      folio:  folio,
+      biz:    negocio,
+      day:    dayNames[today],
+      prize:  prizeWon || prize.val,
+      visits: visits,
+    };
+    fetch(SHEETS_URL, {
+      method: 'POST',
+      mode:   'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body:   JSON.stringify(payload),
+    }).catch(() => {}); /* silencioso si falla */
+  }
+
+  /* Log on page load (escaneo registrado) */
+  logScan(null);
+</script>
+</body>
+</html>

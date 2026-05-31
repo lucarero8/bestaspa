@@ -977,12 +977,10 @@
       prize:  prizeWon || prize.val,
       visits: visits,
     };
-    fetch(SHEETS_URL, {
-      method: 'POST',
-      mode:   'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body:   JSON.stringify(payload),
-    }).catch(() => {}); /* silencioso si falla */
+    /* Método GET con params — evita CORS por completo */
+    const qs = new URLSearchParams(payload).toString();
+    const img = new Image();
+    img.src = SHEETS_URL + '?' + qs;
   }
 
   /* Log on page load (escaneo registrado) */

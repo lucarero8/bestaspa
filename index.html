@@ -28,9 +28,10 @@
 
     body {
       background: var(--ink);
-      color: #f5ede4;
+      color: #f8f2ec;
       font-family: 'Jost', sans-serif;
       font-weight: 300;
+      font-size: 18px;
       min-height: 100vh;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
@@ -71,7 +72,7 @@
     .logo-ring svg { width: 100%; height: 100%; }
 
     .welcome-tag {
-      font-size: 0.62rem; letter-spacing: 0.32em; color: var(--rose);
+      font-size: 0.78rem; letter-spacing: 0.28em; color: #e8b48a;
       text-transform: uppercase; margin-bottom: 14px;
       animation: fadeUp 0.8s 0.1s ease both;
     }
@@ -90,18 +91,18 @@
       animation: fadeUp 0.8s 0.25s ease both; }
 
     .hero-sub {
-      font-size: 0.78rem; letter-spacing: 0.12em; color: var(--muted);
+      font-size: 0.95rem; letter-spacing: 0.1em; color: #c8b09a;
       animation: fadeUp 0.8s 0.3s ease both;
     }
 
     /* folio badge */
     .folio {
       display: inline-flex; align-items: center; gap: 8px;
-      margin-top: 22px; padding: 8px 18px;
+      margin-top: 22px; padding: 9px 20px;
       border: 1px solid var(--card-br);
-      background: rgba(201,149,106,0.06);
+      background: rgba(201,149,106,0.08);
       border-radius: 40px;
-      font-size: 0.68rem; letter-spacing: 0.2em; color: var(--muted);
+      font-size: 0.82rem; letter-spacing: 0.18em; color: #b8a090;
       animation: fadeUp 0.8s 0.35s ease both;
     }
     .folio b { color: var(--gold); font-weight: 500; }
@@ -125,14 +126,14 @@
       animation: pulseRing 2.4s ease-out infinite;
     }
     .pulse-icon::after { animation-delay: 1.2s; }
-    .nfc-label { font-size: 0.62rem; letter-spacing: 0.22em; color: var(--dim); text-transform: uppercase; }
+    .nfc-label { font-size: 0.72rem; letter-spacing: 0.2em; color: #b0907a; text-transform: uppercase; }
 
     /* scroll hint */
     .scroll-hint {
       margin-top: 44px; display: flex; flex-direction: column; align-items: center; gap: 8px;
       animation: fadeUp 0.8s 0.7s ease both;
     }
-    .scroll-hint span { font-size: 0.6rem; letter-spacing: 0.25em; color: var(--dim); text-transform: uppercase; }
+    .scroll-hint span { font-size: 0.72rem; letter-spacing: 0.22em; color: #b0907a; text-transform: uppercase; }
     .scroll-arrow { animation: bounce 2s ease-in-out infinite; }
 
     /* ── SECTION SHARED ── */
@@ -141,7 +142,7 @@
       display: flex; align-items: center; justify-content: center; gap: 16px;
       margin-bottom: 12px;
     }
-    .section-label span { font-size: 0.6rem; letter-spacing: 0.35em; color: var(--rose); text-transform: uppercase; }
+    .section-label span { font-size: 0.74rem; letter-spacing: 0.3em; color: #e8b48a; text-transform: uppercase; }
     .section-label .line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--card-br)); max-width: 60px; }
     .section-label .line.r { background: linear-gradient(270deg, transparent, var(--card-br)); }
 
@@ -152,7 +153,7 @@
       letter-spacing: 0.05em; margin-bottom: 8px;
     }
     h2.section-title em { color: var(--gold); font-style: italic; }
-    .section-sub { text-align: center; color: var(--muted); font-size: 0.82rem; letter-spacing: 0.06em; margin-bottom: 40px; }
+    .section-sub { text-align: center; color: #c0a898; font-size: 0.9rem; letter-spacing: 0.05em; margin-bottom: 40px; }
 
     /* ── PRIZE OF THE DAY ── */
     .prize-card {
@@ -169,7 +170,7 @@
       position: absolute; top: 0; left: 0; right: 0; height: 2px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
     }
-    .prize-day-label { font-size: 0.6rem; letter-spacing: 0.3em; color: var(--rose); text-transform: uppercase; margin-bottom: 6px; }
+    .prize-day-label { font-size: 0.75rem; letter-spacing: 0.25em; color: #e8b48a; text-transform: uppercase; margin-bottom: 6px; }
     .prize-value {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(3rem, 14vw, 5rem);
@@ -177,7 +178,7 @@
       line-height: 1; font-style: italic;
       margin: 8px 0;
     }
-    .prize-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+    .prize-desc { font-size: 0.95rem; color: #c8b09a; line-height: 1.7; margin-bottom: 20px; }
     .prize-cta {
       display: inline-block; padding: 10px 28px;
       background: linear-gradient(135deg, var(--rose), var(--rose2));
@@ -207,18 +208,18 @@
       display: flex; align-items: center; justify-content: center;
       color: var(--rose); margin-bottom: 12px;
     }
-    .hook-tag { font-size: 0.58rem; letter-spacing: 0.25em; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+    .hook-tag { font-size: 0.68rem; letter-spacing: 0.2em; color: #b8a090; text-transform: uppercase; margin-bottom: 4px; }
     .hook-value {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem; font-weight: 600; color: var(--rose2);
+      font-size: 1.65rem; font-weight: 600; color: #e8c97a;
       font-style: italic; line-height: 1.1; margin-bottom: 4px;
     }
-    .hook-desc { font-size: 0.74rem; color: var(--muted); line-height: 1.5; }
+    .hook-desc { font-size: 0.82rem; color: #c0a898; line-height: 1.55; }
     .hook-card.featured {
       grid-column: span 2;
       border-color: rgba(232,201,122,0.25);
     }
-    .hook-card.featured .hook-value { font-size: 2rem; }
+    .hook-card.featured .hook-value { font-size: 2.1rem; }
 
     /* ── RULETA ── */
     .roulette-wrap {
@@ -263,7 +264,7 @@
       font-style: italic; line-height: 1;
     }
     .spin-result .result-label {
-      font-size: 0.65rem; letter-spacing: 0.25em; color: var(--muted);
+      font-size: 0.76rem; letter-spacing: 0.22em; color: #c0a898;
       text-transform: uppercase; margin-top: 4px;
     }
 
@@ -302,7 +303,7 @@
       font-size: 1.8rem; font-weight: 600; color: var(--gold);
       font-style: italic; line-height: 1;
     }
-    .stat-label { font-size: 0.6rem; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; margin-top: 4px; }
+    .stat-label { font-size: 0.72rem; letter-spacing: 0.18em; color: #b8a090; text-transform: uppercase; margin-top: 4px; }
 
     /* ── CUMPLE ── */
     .bday-card {
@@ -316,7 +317,7 @@
       font-size: 1.5rem; font-weight: 400; color: var(--gold);
       font-style: italic; margin-bottom: 6px;
     }
-    .bday-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+    .bday-desc { font-size: 0.9rem; color: #c0a898; line-height: 1.7; }
 
     /* ── REFERIDO ── */
     .ref-card {
@@ -391,7 +392,7 @@
     }
     .wa-btn:active { transform: scale(0.97); box-shadow: 0 4px 12px rgba(37,211,102,0.2); }
     .wa-btn svg { flex-shrink: 0; }
-    .cta-sub { margin-top: 14px; font-size: 0.72rem; color: var(--dim); letter-spacing: 0.08em; }
+    .cta-sub { margin-top: 14px; font-size: 0.82rem; color: #b0907a; letter-spacing: 0.08em; }
 
     /* ── FOOTER ── */
     footer {
@@ -402,12 +403,12 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.5rem; letter-spacing: 0.3em; color: var(--rose2); font-weight: 300;
     }
-    .footer-sub { font-size: 0.65rem; letter-spacing: 0.18em; color: var(--dim); margin-top: 4px; }
+    .footer-sub { font-size: 0.76rem; letter-spacing: 0.16em; color: #b0907a; margin-top: 4px; }
     .footer-badge {
       display: inline-flex; align-items: center; gap: 6px;
-      margin-top: 18px; padding: 6px 14px;
-      border: 1px solid rgba(201,149,106,0.15); border-radius: 20px;
-      font-size: 0.58rem; letter-spacing: 0.15em; color: var(--dim);
+      margin-top: 18px; padding: 7px 16px;
+      border: 1px solid rgba(201,149,106,0.2); border-radius: 20px;
+      font-size: 0.7rem; letter-spacing: 0.14em; color: #b0907a;
       text-decoration: none;
     }
 
@@ -699,7 +700,7 @@
     <div class="prize-card" style="margin-bottom:16px;">
       <div class="prize-day-label">Tu 5ª visita = Premio especial</div>
       <div class="stamp-track" id="stampTrack"></div>
-      <p style="font-size:0.75rem;color:var(--muted);">Completa 5 visitas y recibe el Kit Nioxin completo</p>
+      <p style="font-size:0.84rem;color:#c0a898;">Completa 5 visitas y recibe el Kit Nioxin completo</p>
     </div>
 
     <!-- cumpleaños -->
@@ -723,7 +724,7 @@
     <div class="ref-card">
       <div class="prize-day-label">Tu descuento por referido</div>
       <div class="ref-amount">$50 OFF</div>
-      <p style="font-size:0.8rem;color:var(--muted);margin-top:8px;line-height:1.6;">
+      <p style="font-size:0.88rem;color:#c0a898;margin-top:8px;line-height:1.7;">
         Comparte tu código y cuando venga juntas, ambas obtienen $50 de descuento en su servicio.
       </p>
       <div class="ref-share">
@@ -763,7 +764,7 @@
       </div>
     </div>
 
-    <p style="text-align:center;font-size:0.72rem;color:var(--dim);margin-top:18px;letter-spacing:0.08em;">
+    <p style="text-align:center;font-size:0.82rem;color:#b0907a;margin-top:18px;letter-spacing:0.08em;">
       Sin app · Sin contraseña · Solo acerca el celular
     </p>
   </section>
@@ -963,7 +964,8 @@
     3. Publicar → Implementar como app web → Acceso: Cualquiera
     4. Reemplazar SHEETS_URL con tu URL
   */
- const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxTUEj8SEg4llxlafns8IJ022zewk1MEUOo4qhpTbYd5Pu2cLV-gR4vYoTtvXNxaLfzLg/exec';
+  const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxTUEj8SEg4llxlafns8IJ022zewk1MEUOo4qhpTbYd5Pu2cLV-gR4vYoTtvXNxaLfzLg/exec';
+
   function logScan(prizeWon) {
     if (!SHEETS_URL) return;
     const payload = {
